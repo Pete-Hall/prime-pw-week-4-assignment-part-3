@@ -20,16 +20,22 @@ const maxItems = 5;
 
 function addItem(item) {
   //console.log('in addItem:', item);
-  if(isFull(basket) === false) {
-    console.log(`in isFull and the basket is not full: ${basket}. ${item} will be added.`);
-    basket.push(item);
-    return true;
+  if(typeof item === 'string') {
+    if(isFull() === false) {
+      console.log(`in isFull and the basket is not full: ${basket}. ${item} will be added.`);
+      basket.push(item);
+      return true;
+    }
+    else {
+      console.log(`in isFull and the basket is full: ${basket}. ${item} could not be added.`);
+      return false;
+    }
   }
   else {
-    console.log(`in isFull and the basket is full: ${basket}. ${item} could not be added.`);
-    return false;
+    console.log('Please use a string in addItem')
   }
 }
+console.log('testing with a number parameter:', addItem(2));
 
 console.log('adding apples, expect true:', addItem('apples'));
 console.log('adding bread, expect true:', addItem('bread'));
@@ -42,56 +48,52 @@ console.log('adding ice cream, expect false:', addItem('ice cream'));
 // REQUIRED: Create a function called listItems. It should:
 // loop over the items in the basket array
 // console.log each individual item on a new line
-function listItems(arrayToList) {
-  console.log('in listItems:', arrayToList);
-  for(let i = 0; i < arrayToList.length; i++) {
-    console.log(arrayToList[i]);
+function listItems() {
+  //console.log('in listItems:');
+  for(let i = 0; i < basket.length; i++) {
+    console.log(basket[i]);
   }
 }
 listItems(basket);
 
 // REQUIRED: Create a function called empty. It should:
 // reset the basket to an empty array
-function empty(arrayToEmpty) {
-  console.log('in empty:', arrayToEmpty);
+function empty() {
+  //console.log('in empty:');
   basket = [];
 }
 
-// empty(basket);
-// console.log('The basket after calling empty() is now (expecting an empty array):',basket);
+empty();
+console.log('The basket after calling empty() is now (expecting an empty array):', basket);
 
 // STRETCH: Create a function called isFull(). It should:
 // return false if the basket contains less than max number of items
 // return true otherwise (equal or more than maxItems)
-function isFull(arrayToCheck) {
-  //console.log('in isFull:', arrayToCheck);
-  if(arrayToCheck.length < maxItems) {
+function isFull() {
+  //console.log('in isFull:');
+  if(basket.length < maxItems) {
     return false;
   }
   else {
     return true;
   }
 }
-/* 
-// testing isFull before adding it to the addItems function
 // testing false situations
-console.log('running isFull with an empty basket, expecting false:', isFull(basket)); // false
+console.log('running isFull with an empty basket, expecting false:', isFull()); // false
 
 addItem('pasta');
 addItem('pasta sauce');
 addItem('garlic');
 addItem('meatballs');
-console.log('running isFull with 4 items in basket, expecting false:', isFull(basket)); // false
+console.log('running isFull with 4 items in basket, expecting false:', isFull()); // false
 
 // testing true situations
 addItem('basil');
-console.log('running isFull with 5 items in basket, expecting true:', isFull(basket)); // true
+console.log('running isFull with 5 items in basket, expecting true:', isFull()); // true
 
 addItem('parmesean');
-console.log('running isFull trying to add a 6th item in basket, expecting true:', isFull(basket)); //true 
+console.log('running isFull trying to add a 6th item in basket, expecting true:', isFull()); //true 
 console.log(basket);
- */
-
 
 // Create a function called removeItem. It should:
 // Take an input parameter for a string item
@@ -100,20 +102,26 @@ console.log(basket);
 // Return the item removed or null if the item was not found
 
 function removeItem(itemToRemove){
-  let indexedItem = basket.indexOf(itemToRemove);
-  console.log(indexedItem); // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/indexOf. returns -1 if item is not found
-  if(indexedItem >= 0) { // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/splice. when using splice, -1 is the same as the array.length-1 aka the last item in the array
-    basket.splice(indexedItem,1);
-    return itemToRemove;
+  if(typeof itemToRemove === 'string') {
+    let indexedItem = basket.indexOf(itemToRemove);
+    console.log(indexedItem); // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/indexOf. returns -1 if item is not found
+    if(indexedItem >= 0) { // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/splice. when using splice, -1 is the same as the array.length-1 aka the last item in the array
+      basket.splice(indexedItem,1);
+      return itemToRemove;
+    }
+    else {
+      return null;
+    }
   }
   else {
-    return false;
+    console.log('Please use a string in removeItem');
   }
 }
 // testing removeItem
 console.log(`The basket is: ${basket}`);
-console.log('The removed item from removeItem is (expecting milk):',removeItem('milk'));
+console.log('The removed item from removeItem is (expecting pasta sauce):',removeItem('pasta sauce'));
 console.log(`The basket is: ${basket}`);
-console.log('The removed item from removeItem is (expecting false):', removeItem('chips'));
+console.log('The removed item from removeItem is (expecting null):', removeItem('chips'));
 console.log(`The basket is: ${basket}`);
 
+console.log('testing with a number parameter:', removeItem(2));
